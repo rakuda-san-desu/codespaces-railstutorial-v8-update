@@ -5,7 +5,13 @@ ARG USER_UID=1000
 ARG USER_GID=1000
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends libyaml-dev sudo \
+  && apt-get install -y --no-install-recommends \
+    bash-completion \
+    libsqlite3-dev \
+    libyaml-dev \
+    openssh-client \
+    sqlite3 \
+    sudo \
   && groupadd --gid ${USER_GID} ${USERNAME} \
   && useradd --uid ${USER_UID} --gid ${USER_GID} -m -s /bin/bash ${USERNAME} \
   && usermod --append --groups sudo ${USERNAME} \
@@ -24,6 +30,7 @@ ENV PATH=${GEM_HOME}/bin:${PATH}
 COPY codespaces-prompt.sh /etc/profile.d/codespaces-prompt.sh
 
 RUN chmod 0644 /etc/profile.d/codespaces-prompt.sh \
-  && echo 'source /etc/profile.d/codespaces-prompt.sh' >> /home/${USERNAME}/.bashrc
+  && echo 'source /etc/profile.d/codespaces-prompt.sh' >> /home/${USERNAME}/.bashrc \
+  && echo 'if [ -f /usr/share/bash-completion/bash_completion ]; then source /usr/share/bash-completion/bash_completion; fi' >> /home/${USERNAME}/.bashrc
 
 USER ${USERNAME}
