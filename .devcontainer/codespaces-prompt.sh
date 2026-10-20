@@ -1,3 +1,8 @@
+if [ -z "${BASH_VERSION:-}" ]; then
+  # shellcheck disable=SC2317
+  return 0 2>/dev/null || exit 0
+fi
+
 __codespaces_strip_controls() {
   local value=$1
 
