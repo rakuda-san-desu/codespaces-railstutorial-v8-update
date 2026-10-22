@@ -7,6 +7,7 @@ ARG USER_GID=1000
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     bash-completion \
+    ca-certificates \
     libsqlite3-dev \
     libyaml-dev \
     openssh-client \
@@ -26,6 +27,10 @@ ENV BUNDLE_PATH=/home/${USERNAME}/.bundle
 ENV GEM_HOME=${BUNDLE_PATH}/ruby/3.2.0
 ENV GEM_PATH=${GEM_HOME}
 ENV PATH=${GEM_HOME}/bin:${PATH}
+
+ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+ENV SSL_CERT_DIR=/etc/ssl/certs
+ENV NODE_OPTIONS=--use-openssl-ca
 
 COPY codespaces-prompt.sh /etc/profile.d/codespaces-prompt.sh
 
