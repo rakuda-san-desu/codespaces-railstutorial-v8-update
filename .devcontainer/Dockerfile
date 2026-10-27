@@ -1,4 +1,4 @@
-FROM rubylang/ruby:3.2.10-dev-jammy
+FROM rubylang/ruby:3.2.11-dev-jammy
 
 ARG USERNAME=vscode
 ARG USER_UID=1000
@@ -39,3 +39,5 @@ RUN chmod 0644 /etc/profile.d/codespaces-prompt.sh \
   && echo 'if [ -f /usr/share/bash-completion/bash_completion ]; then source /usr/share/bash-completion/bash_completion; fi' >> /home/${USERNAME}/.bashrc
 
 USER ${USERNAME}
+
+RUN gem install bundler -v 2.5.6
